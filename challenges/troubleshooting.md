@@ -32,7 +32,7 @@ If match:
 Check validator_key.json
 
 ```
-cat ~/.near/shardnet/validator_key.json
+cat ~/.near/validator_key.json
 ```
 
 account_id must be like : xx.factory.shardnet.near
@@ -113,7 +113,7 @@ rm ~/.near/data/*
 
 cd ~/nearcore
 git fetch
-git checkout c1b047b8187accbf6bd16539feb7bb60185bdc38
+git checkout 68bfa84ed1455f891032434d37ccad696e91e4f5
 cargo build -p neard --release --features shardnet
 
 cd ~/.near
@@ -127,6 +127,21 @@ sudo systemctl start neard && journalctl -n 100 -f -u neard | ccze -A
 ```
 
 Also, if you owner account or staking pool doesn't appear is probably that it was removed during hard fork. Make those again.
+
+
+## NEAR command worked before but now "no matching pair found"
+Please always check if there is word "testnet" somewhere in the output of failing command. NEAR CLI is configured to use the "testnet" chain by default, so we need to always explicitly tell it to use "shardnet" by setting environment variable named "NEAR_ENV" (taken from Challenge 1):
+
+```
+export NEAR_ENV=shardnet
+```
+
+You can also run this command to set the Near testnet Environment persistent (so it's not lost after restart):
+```
+echo 'export NEAR_ENV=shardnet' >> ~/.bashrc
+echo 'export NEAR_ENV=shardnet' >> ~/.bash_profile
+source $HOME/.bash_profile
+```
 
 ## ***Common Node Errors and Solutions*** by Open Shards Alliance
 In case none of the above worked, you can use this guide. In this document you will find a general rules on how to solve problems related to a node validator running on NEAR Protocol. 
